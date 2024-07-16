@@ -4,11 +4,13 @@ const koneksi = require("./config/database");
 const multer = require('multer');
 const path = require('path');
 const app = express();
-const PORT = 3000;
+const PORT = 5000;
+const cors = require('cors')
 
 // set body parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
 
 app.use(express.static("./public"));
 
@@ -79,7 +81,7 @@ app.post('/api/movies', upload.single('image'), (req, res) => {
     })
   } else {
     console.log(req.file.filename)
-    var imgsrc = 'http://localhost:3000/images/' + req.file.filename;
+    var imgsrc = 'http://localhost:5000/images/' + req.file.filename;
     // buat variabel penampung data dan query sql
     const data = { ...req.body};
     const querySql = 'INSERT INTO movies (judul, rating, deskripsi, sutradara, foto) VALUES (?, ?, ?, ?, ?)'
